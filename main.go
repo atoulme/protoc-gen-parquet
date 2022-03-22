@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"google.golang.org/protobuf/types/pluginpb"
 	"log"
 	"path/filepath"
 	"strings"
@@ -62,6 +63,7 @@ func main() {
 	protogen.Options{
 		ParamFunc: flags.Set,
 	}.Run(func(gen *protogen.Plugin) error {
+		gen.SupportedFeatures = uint64(pluginpb.CodeGeneratorResponse_FEATURE_PROTO3_OPTIONAL)
 		outputMessagesList = strings.Split(*outputMessages, ";")
 		for _, f := range gen.Files {
 			if f.Generate {
